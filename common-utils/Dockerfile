@@ -14,4 +14,5 @@ RUN git clone https://github.com/queeno/infra-problem /infra-problem
 
 WORKDIR /infra-problem
 
-RUN make libs
+RUN make libs && \
+    make clean all
