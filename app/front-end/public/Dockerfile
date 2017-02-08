@@ -1,8 +1,13 @@
-FROM quay.io/queeno/tw-common
+FROM ubuntu:16.04
 
-WORKDIR /infra-problem/front-end/public
+ENV DEBIAN_FRONTEND noninteractive
+ENV USER root
 
 RUN apt-get update && \
-    apt-get install -y python3
+    apt-get install -y git python3
+
+RUN git clone https://github.com/queeno/infra-problem /infra-problem
+
+WORKDIR /infra-problem/front-end/public
 
 CMD ["python", "serve.py"]
