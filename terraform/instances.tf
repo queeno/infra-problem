@@ -1,5 +1,5 @@
 module "tw_instance" {
-    instances = 1
+    instances = 3
     source = "modules/tw-instance"
     role = "app"
     environment = "dev"
