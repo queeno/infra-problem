@@ -19,9 +19,9 @@ RUN cd /infra-problem && \
 WORKDIR /infra-problem/build
 
 ENV APP_PORT 8083
-ENV STATIC_URL http://tw-static-assets:8000
-ENV QUOTE_SERVICE_URL http://tw-quotes:8081
-ENV NEWSFEED_SERVICE_URL http://tw-newsfeed:8082
+ENV STATIC_URL http://tw-static-assets
+ENV QUOTE_SERVICE_URL http://tw-quotes
+ENV NEWSFEED_SERVICE_URL http://tw-newsfeed
 ENV NEWSFEED_SERVICE_TOKEN 'T1&eWbYXNWG1w1^YGKDPxAWJ@^et^&kX'
 
 EXPOSE 8083

@@ -10,4 +10,6 @@ RUN git clone https://github.com/queeno/infra-problem /infra-problem
 
 WORKDIR /infra-problem/front-end/public
 
+EXPOSE 8000
+
 CMD ["python", "serve.py"]
