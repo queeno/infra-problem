@@ -17,11 +17,11 @@ resource "null_resource" "etcd-discovery" {
 data "template_file" "cloud-config" {
   count    = "${var.instances}"
   template = "${file(format("%s/%s", path.module, var.cloud_config_file))}"
-  depends_on = ["null_resource.etcd-discovery"]
 
   vars {
     region              = "${var.region}"
     etcd_discovery_url  = "${file(format("%s/%s", path.module, var.etcd_discovery_url))}"
+    depends_on          = "${null_resource.etcd-discovery.id}"
   }
 }
 
