@@ -53,6 +53,11 @@ resource "google_compute_instance" "thoughtworks" {
         "user-data" = "${data.template_file.cloud-config.*.rendered[count.index]}"
     }
 
+    scheduling {
+        preemptible = "${var.preemptible}"
+        automatic_restart = "${var.automatic_restart}"
+    }
+
 }
 
 resource "google_compute_disk" "thoughtworks" {

@@ -53,3 +53,11 @@ variable "cloud_config_file" {
 variable "etcd_discovery_url" {
     default = "etcd_discovery_url.txt"
 }
+
+variable "preemptible" {
+    default = false
+}
+
+variable "automatic_restart" {
+    default = true
+}
