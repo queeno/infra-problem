@@ -45,3 +45,11 @@ variable "public_key_path" {}
 variable "fw_rules" {
     type = "list"
 }
+
+variable "cloud_config_file" {
+    default = "cloud-config.tpl"
+}
+
+variable "etcd_discovery_url" {
+    default = "etcd_discovery_url.txt"
+}

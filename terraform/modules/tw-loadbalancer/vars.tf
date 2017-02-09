@@ -7,7 +7,7 @@ variable "zones" {
     type = "list"
 }
 
-variable "port" {}
+variable "port_range" {}
 
 variable "request_path" {
     default = "/"

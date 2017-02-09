@@ -8,6 +8,22 @@ data "template_file" "fqdn" {
     template = "${data.template_file.hostname.*.rendered[count.index]}.gcloud-${var.region}.${var.environment}"
 }
 
+resource "null_resource" "etcd-discovery" {
+  provisioner "local-exec" {
+    command = "curl https://discovery.etcd.io/new?size=${var.instances} > ${format("%s/%s", path.module, var.etcd_discovery_url)}"
+  }
+}
+
+data "template_file" "cloud-config" {
+  count    = "${var.instances}"
+  template = "${file(format("%s/%s", path.module, var.cloud_config_file))}"
+  depends_on = ["null_resource.etcd-discovery"]
+
+  vars {
+    region              = "${var.region}"
+    etcd_discovery_url  = "${file(format("%s/%s", path.module, var.etcd_discovery_url))}"
+  }
+}
 
 resource "google_compute_instance" "thoughtworks" {
     count = "${var.instances}"
@@ -33,13 +49,9 @@ resource "google_compute_instance" "thoughtworks" {
     }
 
     metadata {
-        sshKeys = "core:${file(var.public_key_path)}"
-        #"user-data" = "${file("${var.cloud_config_file}")}"
+        "sshKeys" = "core:${file(var.public_key_path)}"
+        "user-data" = "${data.template_file.cloud-config.*.rendered[count.index]}"
     }
-
-    /*service_account {
-        scopes = ["userinfo-email", "compute-ro", "storage-ro"]
-    }*/
 
 }
 
