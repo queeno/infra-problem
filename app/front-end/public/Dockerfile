@@ -8,7 +8,7 @@ RUN apt-get update && \
 
 RUN git clone https://github.com/queeno/infra-problem /infra-problem
 
-WORKDIR /infra-problem/front-end/public
+WORKDIR /infra-problem/app/front-end/public
 
 EXPOSE 8000
 
