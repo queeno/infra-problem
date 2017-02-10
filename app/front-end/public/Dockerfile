@@ -12,4 +12,4 @@ WORKDIR /infra-problem/front-end/public
 
 EXPOSE 8000
 
-CMD ["python", "serve.py"]
+CMD ["./serve.py"]
