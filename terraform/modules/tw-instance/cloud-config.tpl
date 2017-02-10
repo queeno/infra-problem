@@ -233,4 +233,12 @@ coreos:
         /usr/bin/fleetctl start tw-static-assets@6666; \
         /usr/bin/fleetctl start tw-static-assets-discovery@6666; \
         /usr/bin/fleetctl start tw-front-end@5555; \
-        /usr/bin/fleetctl start tw-front-end-discovery@5555"
+        /usr/bin/fleetctl start tw-front-end-discovery@5555; \
+        /usr/bin/fleetctl start tw-quotes@18888; \
+        /usr/bin/fleetctl start tw-quotes-discovery@18888; \
+        /usr/bin/fleetctl start tw-newsfeed@17777; \
+        /usr/bin/fleetctl start tw-newsfeed-discovery@17777; \
+        /usr/bin/fleetctl start tw-static-assets@16666; \
+        /usr/bin/fleetctl start tw-static-assets-discovery@16666; \
+        /usr/bin/fleetctl start tw-front-end@15555; \
+        /usr/bin/fleetctl start tw-front-end-discovery@15555"
