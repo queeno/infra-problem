@@ -1,9 +1,11 @@
 module "tw_instance" {
-    instances = 1
+    instances = 3
     source = "modules/tw-instance"
     role = "app"
     environment = "dev"
     public_key_path = "${var.public_key_path}"
+    dns_zone_name   = "gce.norix.co.uk."
+    dns_resource_name   = "norix"
     fw_rules = [
         {
             name = "world-to-ssh"

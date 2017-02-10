@@ -82,3 +82,14 @@ resource "google_compute_firewall" "thoughtworks" {
     source_ranges = "${split(",", lookup(var.fw_rules[count.index], "source_ips"))}"
     target_tags = ["${var.role}"]
 }
+
+resource "google_dns_record_set" "thoughtworks" {
+    count = "${var.instances}"
+    name = "${google_compute_instance.thoughtworks.*.name[count.index]}.${var.dns_zone_name}"
+    type = "A"
+    ttl  = 15
+
+    managed_zone = "${var.dns_resource_name}"
+
+    rrdatas = ["${google_compute_instance.thoughtworks.*.network_interface.0.access_config.0.assigned_nat_ip[count.index]}"]
+}

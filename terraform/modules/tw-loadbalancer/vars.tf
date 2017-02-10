@@ -28,3 +28,6 @@ variable "unhealthy_threshold" {
 variable "timeout_sec" {
     default = 3
 }
+
+variable "dns_zone_name" {}
+variable "dns_resource_name" {}

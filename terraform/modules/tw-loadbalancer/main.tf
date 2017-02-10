@@ -19,3 +19,13 @@ resource "google_compute_http_health_check" "thoughtworks" {
   unhealthy_threshold = "${var.unhealthy_threshold}"
   timeout_sec         = "${var.timeout_sec}"
 }
+
+resource "google_dns_record_set" "thoughtworks" {
+  name = "${var.name}.${var.dns_zone_name}"
+  type = "A"
+  ttl  = 15
+
+  managed_zone = "${var.dns_resource_name}"
+
+  rrdatas = ["${google_compute_forwarding_rule.thoughtworks.ip_address}"]
+}

@@ -1,4 +1,6 @@
 variable "instances" {}
+variable "dns_zone_name" {}
+variable "dns_resource_name" {}
 
 variable "disk_type" {
     default = "pd-standard"
