@@ -222,6 +222,9 @@ coreos:
         Type=oneshot
         RemainAfterExit=no
         ExecStartPre=/bin/sh -c "until /usr/bin/fleetctl list-machines; do sleep 2; done"
+                                 if [ $? != 0 ]; then etcdctl mkdir /containers; \
+                                                      etcdctl set /containers/started 1; \
+                                 else exit 1; fi"
         ExecStartPre=/bin/sh -c "/usr/bin/fleetctl submit /var/lib/fleet/*.service"
         ExecStart=/bin/sh -c "/usr/bin/fleetctl start tw-quotes@8888; \
         /usr/bin/fleetctl start tw-quotes-discovery@8888; \
