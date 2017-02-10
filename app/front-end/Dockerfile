@@ -19,7 +19,7 @@ RUN cd /infra-problem && \
 WORKDIR /infra-problem/build
 
 ENV APP_PORT 8083
-ENV STATIC_URL http://tw-static-assets
+ENV STATIC_URL http://www.gce.norix.co.uk
 ENV QUOTE_SERVICE_URL http://tw-quotes
 ENV NEWSFEED_SERVICE_URL http://tw-newsfeed
 ENV NEWSFEED_SERVICE_TOKEN 'T1&eWbYXNWG1w1^YGKDPxAWJ@^et^&kX'
