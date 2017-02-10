@@ -7,11 +7,12 @@ resource "google_compute_target_pool" "thoughtworks" {
 resource "google_compute_forwarding_rule" "thoughtworks" {
   name       = "fr-${var.name}"
   target     = "${google_compute_target_pool.thoughtworks.self_link}"
-  port_range = "${var.port_range}"
+  port_range = "${var.port}-${var.port}"
 }
 
 resource "google_compute_http_health_check" "thoughtworks" {
   name                = "hc-${var.name}"
+  port                = "${var.port}"
   request_path        = "${var.request_path}"
   check_interval_sec  = "${var.check_interval_sec}"
   healthy_threshold   = "${var.healthy_threshold}"
