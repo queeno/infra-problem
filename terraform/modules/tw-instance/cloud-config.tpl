@@ -17,11 +17,11 @@ write_files:
       After=etcd2.service
       After=fleet.service
       [Service]
-      Restart=on-failure
+      Restart=always
       ExecStartPre=-/usr/bin/docker kill tw-quotes
       ExecStartPre=-/usr/bin/docker rm tw-quotes
       ExecStartPre=/usr/bin/docker pull quay.io/queeno/tw-quotes
-      ExecStart=/bin/sh -c "/usr/bin/docker run -p %i:8081 --name tw-quotes-%i quay.io/queeno/tw-quotes"
+      ExecStart=/bin/sh -c "/usr/bin/docker run --health-cmd 'curl http://localhost:8081/ping || exit 1' --health-interval 3s --health-retries 3 --health-timeout 3s -p %i:8081 --name tw-quotes-%i quay.io/queeno/tw-quotes"
       ExecStop=/usr/bin/docker kill tw-quotes
   - path: /var/lib/fleet/tw-quotes-discovery@.service
     content: |
@@ -30,7 +30,7 @@ write_files:
       BindsTo=tw-quotes@%i.service
       After=tw-quotes@%i.service
       [Service]
-      Restart=on-failure
+      Restart=always
       ExecStart=/bin/sh -c "while true; do \
       etcdctl set /traefik/backends/tw-quotes/servers/server%i/url 'http://%H:%i' \
       --ttl 60; \
@@ -51,11 +51,11 @@ write_files:
       After=etcd2.service
       After=fleet.service
       [Service]
-      Restart=on-failure
+      Restart=always
       ExecStartPre=-/usr/bin/docker kill tw-newsfeed
       ExecStartPre=-/usr/bin/docker rm tw-newsfeed
       ExecStartPre=/usr/bin/docker pull quay.io/queeno/tw-newsfeed
-      ExecStart=/bin/sh -c "/usr/bin/docker run -p %i:8082 --name tw-newsfeed-%i quay.io/queeno/tw-newsfeed"
+      ExecStart=/bin/sh -c "/usr/bin/docker run --health-cmd 'curl http://localhost:8082/ping || exit 1' --health-interval 3s --health-retries 3 --health-timeout 3s -p %i:8082 --name tw-newsfeed-%i quay.io/queeno/tw-newsfeed"
       ExecStop=/usr/bin/docker kill tw-newsfeed
   - path: /var/lib/fleet/tw-newsfeed-discovery@.service
     content: |
@@ -64,7 +64,7 @@ write_files:
       BindsTo=tw-newsfeed@%i.service
       After=tw-newsfeed@%i.service
       [Service]
-      Restart=on-failure
+      Restart=always
       ExecStart=/bin/sh -c "while true; do \
       etcdctl set /traefik/backends/tw-newsfeed/servers/server%i/url 'http://%H:%i' \
       --ttl 60; \
@@ -85,11 +85,11 @@ write_files:
       After=etcd2.service
       After=fleet.service
       [Service]
-      Restart=on-failure
+      Restart=always
       ExecStartPre=-/usr/bin/docker kill tw-static-assets
       ExecStartPre=-/usr/bin/docker rm tw-static-assets
       ExecStartPre=/usr/bin/docker pull quay.io/queeno/tw-static-assets
-      ExecStart=/bin/sh -c "/usr/bin/docker run -p %i:8000 --name tw-static-assets-%i quay.io/queeno/tw-static-assets"
+      ExecStart=/bin/sh -c "/usr/bin/docker run --health-cmd 'curl http://localhost:8000/ping || exit 1' --health-interval 3s --health-retries 3 --health-timeout 3s -p %i:8000 --name tw-static-assets-%i quay.io/queeno/tw-static-assets"
       ExecStop=/usr/bin/docker kill tw-static-assets
   - path: /var/lib/fleet/tw-static-assets-discovery@.service
     content: |
@@ -98,7 +98,7 @@ write_files:
       BindsTo=tw-static-assets@%i.service
       After=tw-static-assets@%i.service
       [Service]
-      Restart=on-failure
+      Restart=always
       ExecStart=/bin/sh -c "while true; do \
       etcdctl set /traefik/backends/tw-static-assets/servers/server%i/url 'http://%H:%i' \
       --ttl 60; \
@@ -119,11 +119,11 @@ write_files:
       After=etcd2.service
       After=fleet.service
       [Service]
-      Restart=on-failure
+      Restart=always
       ExecStartPre=-/usr/bin/docker kill tw-front-end
       ExecStartPre=-/usr/bin/docker rm tw-front-end
       ExecStartPre=/usr/bin/docker pull quay.io/queeno/tw-front-end
-      ExecStart=/bin/sh -c "/usr/bin/docker run --add-host=tw-static-assets:$(dig +short %H) --add-host=tw-quotes:$private_ipv4 --add-host=tw-newsfeed:$private_ipv4 -p %i:8083 --name tw-front-end-%i quay.io/queeno/tw-front-end"
+      ExecStart=/bin/sh -c "/usr/bin/docker run --health-cmd 'curl http://localhost:8083/ping || exit 1' --health-interval 3s --health-retries 3 --health-timeout 3s --add-host=tw-static-assets:$(dig +short %H) --add-host=tw-quotes:$private_ipv4 --add-host=tw-newsfeed:$private_ipv4 -p %i:8083 --name tw-front-end-%i quay.io/queeno/tw-front-end"
       ExecStop=/usr/bin/docker kill tw-front-end
   - path: /var/lib/fleet/tw-front-end-discovery@.service
     content: |
@@ -132,7 +132,7 @@ write_files:
       BindsTo=tw-front-end@%i.service
       After=tw-front-end@%i.service
       [Service]
-      Restart=on-failure
+      Restart=always
       ExecStart=/bin/sh -c "while true; do \
       etcdctl set /traefik/backends/tw-front-end/servers/server%i/url 'http://%H:%i' \
       --ttl 60; \
@@ -202,11 +202,11 @@ coreos:
         After=etcd2.service
         After=fleet.service
         [Service]
-        Restart=on-failure
+        Restart=always
         ExecStartPre=-/usr/bin/docker kill traefik
         ExecStartPre=-/usr/bin/docker rm traefik
         ExecStartPre=/usr/bin/docker pull traefik
-        ExecStart=/bin/sh -c "/usr/bin/docker run --add-host=docker-host:$private_ipv4 --name traefik -p 8080:8080 -p 80:80 -v /etc/traefik.toml:/etc/traefik/traefik.toml traefik"
+        ExecStart=/bin/sh -c "/usr/bin/docker run --health-cmd 'curl http://localhost:8080 || exit 1' --health-interval 3s --health-retries 3 --health-timeout 3s --add-host=docker-host:$private_ipv4 --name traefik -p 8080:8080 -p 80:80 -v /etc/traefik.toml:/etc/traefik/traefik.toml traefik"
         ExecStop=/usr/bin/docker stop traefik
     - name: run-containers.service
       command: start
