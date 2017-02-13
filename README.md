@@ -43,7 +43,7 @@ Having chosen the immutable design pattern, I have made the following implementa
 
 A summary of the technologies highlighted in this section is represented in the follwing diagram:
 
-(https://github.com/queeno/infra-problem/blob/master/design_diagram.pdf")
+![](https://github.com/queeno/infra-problem/blob/master/design_diagram.png?raw=true)
 
 ## How to run
 
