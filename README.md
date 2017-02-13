@@ -43,7 +43,7 @@ Having chosen the immutable design pattern, I have made the following implementa
 
 A summary of the technologies highlighted in this section is represented in the follwing diagram:
 
-[alt text](https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png "Logo Title Text 1")
+(https://github.com/queeno/infra-problem/blob/master/design_diagram.pdf")
 
 ## How to run
 
